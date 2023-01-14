@@ -26,14 +26,14 @@ jobs:
 
       - run: mkdir -p './mirror'
 
-      - run: docker compose --file ./docker-compose-mount-content.yml build --no-cache --pull ;
-      - run: docker compose --file ./docker-compose-mount-content.yml up --force-recreate --detach ;
+      - run: docker compose --file ./docker-compose-mount-content.yml build ;
+      - run: docker compose --file ./docker-compose-mount-content.yml up --detach ;
       - run: until docker compose --file ./docker-compose-mount-content.yml ps | grep -v -e 'NAME' | wc -l | grep -e '^[[:space:]]*0[[:space:]]*$' ; do echo "Waiting for content..." ; sleep 1 ; done ;
 
       - run: docker compose build --no-cache --pull ;
       - run: docker compose up --force-recreate --detach ;
       #- run: until docker compose logs --tail="all" | grep -e 'Tomcat started on port(s): 8080 (http)' ; do echo "Waiting for the app..." ; sleep 1 ; done ;
-      - run: until docker compose logs --tail="all" | grep -e "Tomcat started on port(s).*8080 (http)" ; do echo "Waiting for the app..." ; sleep 1 ; done ;
+      - run: until docker compose logs | grep -e "Tomcat started on port(s).*8080 (http)" ; do echo "Waiting for the app..." ; sleep 1 ; done ;
 
       - run: ./create-mirror-from-cluster.sh
 
