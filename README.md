@@ -35,7 +35,7 @@ Static site launch:
 [ ] Update route 53 config with live. and stage. entries
 [ ] Create authenticated endpoint for stage
 [ ] Secure Origins in both accounts and Polycode too
-
+[ ] Fix privilages and deploy using the specific deployment user 
 [ ] Move to GitHub private repository and rename project to www.diy....
 [ ] Implement GitHub actions to build the mirror and run a link checker.
 [ ] Use GitHub actions to run a link checker.
