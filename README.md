@@ -65,9 +65,9 @@ $
 
 Build static site for staging
 -----------------------------
-Either source script `./build-setenv-stage.sh` and run script `./build.sh` or the following commands:
+Either source script `./setenv-stage.sh` and run script `./build.sh` or the following commands:
 ```bash
-$ source ./build-setenv-stage.sh
+$ source ./setenv-stage.sh
 $ mkdir -p './mirror'
 $ docker compose --file ./docker-compose-mount-content.yml build --no-cache --pull ;
 $ docker compose --file ./docker-compose-mount-content.yml up --force-recreate --detach --wait ;
@@ -82,7 +82,7 @@ Deploy static site for staging
 ```bash
 $ # TODO: Add permissions for the deployment user then reinstate: source ./aws-diyaccounting-co-uk-www-deployment-keys.sh
 $ source ./aws-887764105431-keys.sh
-$ source ./build-setenv-stage.sh
+$ source ./setenv-stage.sh
 $ echo "${WEBSITE_ENDPOINT?}"
 http://www.stage.diyaccounting.co.uk.s3-website.eu-west-2.amazonaws.com
 $ aws s3 sync './mirror' "s3://${WWW_DOMAIN_NAME?}/" --exclude '*content*' --delete --acl public-read ;
@@ -136,9 +136,9 @@ $
 
 Build static site for live
 --------------------------
-Either source script `./build-setenv-live.sh` and run script `./build.sh` or the following commands:
+Either source script `./setenv-live.sh` and run script `./build.sh` or the following commands:
 ```bash
-$ source ./build-setenv-live.sh
+$ source ./setenv-live.sh
 $ mkdir -p './mirror'
 $ docker compose --file ./docker-compose-mount-content.yml build --no-cache --pull ;
 $ docker compose --file ./docker-compose-mount-content.yml up --force-recreate --detach --wait ;
@@ -155,7 +155,7 @@ To update the live site (www.diyaccounting.co.uk) the CloudFront distribution mu
 ```bash
 $ # TODO: Add permissions for the deployment user then reinstate: source ./aws-diyaccounting-co-uk-www-deployment-keys.sh
 $ source ./aws-887764105431-keys.sh
-$ source ./build-setenv-live.sh
+$ source ./setenv-live.sh
 $ echo "${WEBSITE_ENDPOINT?}"
 http://www.live.diyaccounting.co.uk.s3-website.eu-west-2.amazonaws.com
 $ aws s3 sync './mirror' "s3://${WWW_DOMAIN_NAME?}/" --exclude '*content*' --delete --acl public-read ;
@@ -324,7 +324,7 @@ Copy static website between S3 buckets
 ```bash
 $ # TODO: Add permissions for the deployment user then reinstate: source ./aws-diyaccounting-co-uk-www-deployment-keys.sh
 $ source ./aws-887764105431-keys.sh
-$ source ./build-setenv-live.sh
+$ source ./setenv-live.sh
 $ echo "${WEBSITE_ENDPOINT?}"
 http://www.live.diyaccounting.co.uk.s3-website.eu-west-2.amazonaws.com
 $ aws s3 ls --summarize --human-readable "s3://${WWW_DOMAIN_NAME?}"

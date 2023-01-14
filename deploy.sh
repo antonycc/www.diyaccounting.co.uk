@@ -2,7 +2,7 @@
 # Purpose: Build the static site to s3
 # Usage: deploy.sh [--clean]
 # Examples:
-# $ source ./build-setenv-stage.sh ;
+# $ source ./setenv-stage.sh ;
 # $ ./deploy.sh
 # $ ./deploy.sh --clean
 clean="${1:-false}" ;

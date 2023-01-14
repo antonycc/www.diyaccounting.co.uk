@@ -1,6 +1,6 @@
 # Purpose: Run the webapp alongside other images of published artefacts.
 # Usage:
-# $ source build-setenv-stage.sh
+# $ source setenv-stage.sh
 # $ docker compose build --no-cache --pull
 # $ docker compose up --force-recreate --detach
 # $ docker-compose logs --follow

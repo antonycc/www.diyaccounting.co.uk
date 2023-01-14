@@ -2,7 +2,7 @@
 # Purpose: Build and a static site
 # Usage: build.sh [--clean|--purge]
 # Examples:
-# $ source ./build-setenv-stage.sh ;
+# $ source ./setenv-stage.sh ;
 # $ ./build.sh
 # $ ./build.sh --clean
 # $ ./build.sh --purge
