@@ -33,7 +33,7 @@ jobs:
       - run: docker compose build --no-cache --pull ;
       - run: docker compose up --force-recreate --detach ;
       #- run: until docker compose logs --tail="all" | grep -e 'Tomcat started on port(s): 8080 (http)' ; do echo "Waiting for the app..." ; sleep 1 ; done ;
-      - run: until docker compose logs --tail="all" | grep -e "Tomcat started on port(s).*8080 (http)" | do echo "Waiting for the app..." ; sleep 1 ; done ;
+      - run: until docker compose logs --tail="all" | grep -e "Tomcat started on port(s).*8080 (http)" ; do echo "Waiting for the app..." ; sleep 1 ; done ;
 
       - run: ./create-mirror-from-cluster.sh
 
