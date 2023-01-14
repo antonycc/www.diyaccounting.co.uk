@@ -1,23 +1,32 @@
-# Compiled class file
-*.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+**/*.iml
+**/*.class
+**/.checkstyle
+**/.DS_Store
+**/.idea
+**/.project
+**/.settings
+**/bin
+**/crm.sql
+**/crm-json-latest.zip
+**/crm-latest.zip
+**/ct-md-latest.zip
+**/docker-compose-mysql
+**/release.properties
+**/server.test.pem
+**/server.test.pem.crt
+**/server.test.pem.key
+**/target
+**/venv
+**/*versionsBackup
+**/*releaseBackup
+test.txt
+/aws-887764105431-keys.sh
+/aws-diyaccounting-co-uk-www-deployment-keys.sh
+/terraform.tfstate
+/.terraform.lock.hcl
+/terraform.tfstate.backup
+/.terraform/
+/gb-web/src/archive/apache2/public-html/content/
+/github-antonycc-keys.sh
+/mirror
+/mirror.log

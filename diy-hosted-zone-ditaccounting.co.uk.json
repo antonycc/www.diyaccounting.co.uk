@@ -1,0 +1,302 @@
+{
+    "ResourceRecordSets": [
+        {
+            "Name": "diyaccounting.co.uk.",
+            "Type": "A",
+            "AliasTarget": {
+                "HostedZoneId": "Z2FDTNDATAQYW2",
+                "DNSName": "d6g332nhd18n8.cloudfront.net.",
+                "EvaluateTargetHealth": false
+            }
+        },
+        {
+            "Name": "diyaccounting.co.uk.",
+            "Type": "MX",
+            "TTL": 60,
+            "ResourceRecords": [
+                {
+                    "Value": "1 aspmx.l.google.com."
+                },
+                {
+                    "Value": "2 alt2.aspmx.l.google.com."
+                },
+                {
+                    "Value": "3 alt1.aspmx.l.google.com."
+                },
+                {
+                    "Value": "4 aspmx2.googlemail.com."
+                },
+                {
+                    "Value": "5 aspmx3.googlemail.com."
+                }
+            ]
+        },
+        {
+            "Name": "diyaccounting.co.uk.",
+            "Type": "NS",
+            "TTL": 3600,
+            "ResourceRecords": [
+                {
+                    "Value": "ns-1088.awsdns-08.org."
+                },
+                {
+                    "Value": "ns-1605.awsdns-08.co.uk."
+                },
+                {
+                    "Value": "ns-134.awsdns-16.com."
+                },
+                {
+                    "Value": "ns-938.awsdns-53.net."
+                }
+            ]
+        },
+        {
+            "Name": "diyaccounting.co.uk.",
+            "Type": "SOA",
+            "TTL": 900,
+            "ResourceRecords": [
+                {
+                    "Value": "ns-1088.awsdns-08.org. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
+                }
+            ]
+        },
+        {
+            "Name": "diyaccounting.co.uk.",
+            "Type": "TXT",
+            "TTL": 60,
+            "ResourceRecords": [
+                {
+                    "Value": "\"v=spf1 include:_spf.google.com include:amazonses.com ~all\""
+                },
+                {
+                    "Value": "\"spf2.0/pra include:_spf.google.com include:amazonses.com ~all\""
+                }
+            ]
+        },
+        {
+            "Name": "_9691c088e26d1804857d7631b544acb5.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 300,
+            "ResourceRecords": [
+                {
+                    "Value": "_d4ad5b0fdb7171280bb701b1dc6004cf.tfmgdnztqk.acm-validations.aws."
+                }
+            ]
+        },
+        {
+            "Name": "_amazonses.diyaccounting.co.uk.",
+            "Type": "TXT",
+            "TTL": 300,
+            "ResourceRecords": [
+                {
+                    "Value": "\"5l7RawISeXePobGulNDc8ttWNlyLJ5oZ1PVSlmQcPhc=\""
+                },
+                {
+                    "Value": "\"HpGsV1I/CaOjW20480/V4vg0wc42EVvfkC4lGajz8CQ=\""
+                },
+                {
+                    "Value": "\"8NuJeOmmMLi+44Dpl8plQQ4sRTlQQsPFP/yYLslas54=\""
+                }
+            ]
+        },
+        {
+            "Name": "_domainconnect.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 3600,
+            "ResourceRecords": [
+                {
+                    "Value": "_domainconnect.gd.domaincontrol.com."
+                }
+            ]
+        },
+        {
+            "Name": "4vycllbcv4g4uuw7vlmjjwsommp4kflf._domainkey.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 3600,
+            "ResourceRecords": [
+                {
+                    "Value": "4vycllbcv4g4uuw7vlmjjwsommp4kflf.dkim.amazonses.com."
+                }
+            ]
+        },
+        {
+            "Name": "5koedn6xw4hjvsdgg5tckm5dfczzosdi._domainkey.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 3600,
+            "ResourceRecords": [
+                {
+                    "Value": "5koedn6xw4hjvsdgg5tckm5dfczzosdi.dkim.amazonses.com."
+                }
+            ]
+        },
+        {
+            "Name": "google._domainkey.diyaccounting.co.uk.",
+            "Type": "TXT",
+            "TTL": 60,
+            "ResourceRecords": [
+                {
+                    "Value": "\"v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCNt4rjVcpGAeiGc6Cp/cM/HC7Z9ybIUp6LzjkQDlD/jvnWyGOskCMHZiY0vXfaxGh1BHlfGdFdcRuO8RvLIsiqTh+sarC1cCgKNw+dSoDzdXTqXDqpuC05mFX46g8U1ZnDAV06r4Um62oOgy27hjF5ZL2qhJ+QmUNdfS6+pP+4jwIDAQAB\""
+                }
+            ]
+        },
+        {
+            "Name": "gvp5gchz4zxgciucrzlrr2xp6hwsukqs._domainkey.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 3600,
+            "ResourceRecords": [
+                {
+                    "Value": "gvp5gchz4zxgciucrzlrr2xp6hwsukqs.dkim.amazonses.com."
+                }
+            ]
+        },
+        {
+            "Name": "h25lwnxp5bvh3ti64pbylet227t5jkdc._domainkey.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 3600,
+            "ResourceRecords": [
+                {
+                    "Value": "h25lwnxp5bvh3ti64pbylet227t5jkdc.dkim.amazonses.com."
+                }
+            ]
+        },
+        {
+            "Name": "hvtbvsg4ms5xnnnzzdv73vwcorazcc7h._domainkey.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 3600,
+            "ResourceRecords": [
+                {
+                    "Value": "hvtbvsg4ms5xnnnzzdv73vwcorazcc7h.dkim.amazonses.com."
+                }
+            ]
+        },
+        {
+            "Name": "jltngx5xyndm7zr57n3374p2knfmxhfh._domainkey.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 3600,
+            "ResourceRecords": [
+                {
+                    "Value": "jltngx5xyndm7zr57n3374p2knfmxhfh.dkim.amazonses.com."
+                }
+            ]
+        },
+        {
+            "Name": "ouswbj3f6y572f5odvngysn3gdgsez2p._domainkey.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 3600,
+            "ResourceRecords": [
+                {
+                    "Value": "ouswbj3f6y572f5odvngysn3gdgsez2p.dkim.amazonses.com."
+                }
+            ]
+        },
+        {
+            "Name": "vsqtlfws2t7skacrho3yszwxxbgvrybt._domainkey.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 300,
+            "ResourceRecords": [
+                {
+                    "Value": "vsqtlfws2t7skacrho3yszwxxbgvrybt.dkim.amazonses.com"
+                }
+            ]
+        },
+        {
+            "Name": "wjhxadbhhxbddtzukumgb6dyjalehntd._domainkey.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 3600,
+            "ResourceRecords": [
+                {
+                    "Value": "wjhxadbhhxbddtzukumgb6dyjalehntd.dkim.amazonses.com."
+                }
+            ]
+        },
+        {
+            "Name": "admin.diyaccounting.co.uk.",
+            "Type": "MX",
+            "TTL": 300,
+            "ResourceRecords": [
+                {
+                    "Value": "10 feedback-smtp.us-east-1.amazonses.com"
+                }
+            ]
+        },
+        {
+            "Name": "admin.diyaccounting.co.uk.",
+            "Type": "TXT",
+            "TTL": 300,
+            "ResourceRecords": [
+                {
+                    "Value": "\"v=spf1 include:amazonses.com ~all\""
+                }
+            ]
+        },
+        {
+            "Name": "content.diyaccounting.co.uk.",
+            "Type": "A",
+            "AliasTarget": {
+                "HostedZoneId": "Z2FDTNDATAQYW2",
+                "DNSName": "d2jnocwctgir91.cloudfront.net.",
+                "EvaluateTargetHealth": false
+            }
+        },
+        {
+            "Name": "ns1.diyaccounting.co.uk.",
+            "Type": "A",
+            "TTL": 3600,
+            "ResourceRecords": [
+                {
+                    "Value": "216.69.185.51"
+                }
+            ]
+        },
+        {
+            "Name": "ns2.diyaccounting.co.uk.",
+            "Type": "A",
+            "TTL": 3600,
+            "ResourceRecords": [
+                {
+                    "Value": "208.109.255.51"
+                }
+            ]
+        },
+        {
+            "Name": "_4195c166ead32290f6f4a3476d15490a.diyaccounting.co.uk.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 60,
+            "ResourceRecords": [
+                {
+                    "Value": "_ab68ab4982da9c209e4f3671fa479b81.fyfbssdptv.acm-validations.aws."
+                }
+            ]
+        },
+        {
+            "Name": "webmail.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 1800,
+            "ResourceRecords": [
+                {
+                    "Value": "ghs.google.com."
+                }
+            ]
+        },
+        {
+            "Name": "www.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 300,
+            "ResourceRecords": [
+                {
+                    "Value": "d6g332nhd18n8.cloudfront.net"
+                }
+            ]
+        },
+        {
+            "Name": "_6a607655df13ad40a823460ea06b6320.www.diyaccounting.co.uk.",
+            "Type": "CNAME",
+            "TTL": 300,
+            "ResourceRecords": [
+                {
+                    "Value": "_831e46ae1dea0abfc9496c2027a3cc09.wggjkglgrm.acm-validations.aws."
+                }
+            ]
+        }
+    ]
+}

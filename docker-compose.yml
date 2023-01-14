@@ -1,0 +1,58 @@
+# Purpose: Run the webapp alongside other images of published artefacts.
+# Usage:
+# $ source build-setenv-stage.sh
+# $ docker compose build --no-cache --pull
+# $ docker compose up --force-recreate --detach
+# $ docker-compose logs --follow
+# $ docker-compose logs --tail="all" --follow
+# $ docker compose down --remove-orphans
+version: '3.8'
+services:
+  content: # Port: 80
+    image: ghcr.io/antonycc/diy-accounting-mdcms:main
+    ports:
+      - 8090:80
+      #HOST:CONTAINER
+    networks:
+      - backoffice
+  catalogue: # Port: 80
+    image: ghcr.io/antonycc/diy-accounting:main
+    ports:
+      - 8100:80
+      #HOST:CONTAINER
+    networks:
+      - backoffice
+  app: # Port: 8080
+    image: ghcr.io/antonycc/diyaccounting-web:main
+    depends_on:
+      - catalogue
+      - content
+    links:
+      - catalogue
+      - content
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE?}
+    networks:
+      - backoffice
+  http:
+    build:
+      context: http
+    depends_on:
+      - catalogue
+      - content
+      - app
+    links:
+      - catalogue
+      - content
+      - app
+    ports:
+      - 8080:80
+       #HOST:CONTAINER
+    networks:
+      - backoffice
+      - web
+networks:
+  web:
+    driver: bridge
+  backoffice:
+    driver: bridge

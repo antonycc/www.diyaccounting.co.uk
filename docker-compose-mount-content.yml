@@ -1,0 +1,26 @@
+# Purpose: Run the webapp alongside other images of published artefacts.
+# Usage:
+# $ docker compose --file ./docker-compose-mount-content.yml build --no-cache --pull
+# $ docker compose --file ./docker-compose-mount-content.yml up --force-recreate --detach
+# $ docker compose --file ./docker-compose-mount-content.yml logs --follow
+# $ docker compose --file ./docker-compose-mount-content.yml logs --tail="all" --follow
+# $ docker compose --file ./docker-compose-mount-content.yml down --remove-orphans
+version: '3.8'
+services:
+  catalogue:
+    image: ghcr.io/antonycc/diy-accounting:main
+    volumes:
+      - ./mirror/zips:/tmp/zips # To accept a copy of /usr/share/webapp/zips
+    entrypoint: ["/bin/cp","-rv","/usr/share/webapp/zips","/tmp/"]
+  content:
+    image: ghcr.io/antonycc/diy-accounting-mdcms:main
+    volumes:
+      - ./mirror/assets:/tmp/assets # To accept a copy of /usr/share/webapp/content/assets
+    entrypoint: ["/bin/cp","-rv","/usr/share/webapp/content/assets","/tmp/"]
+  app:
+    image: ghcr.io/antonycc/diyaccounting-web:main
+    volumes:
+      - ./mirror:/tmp # To accept a copy of /workspace
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE?}
+    entrypoint: ["/bin/cp","-rv","/workspace","/tmp/"]
