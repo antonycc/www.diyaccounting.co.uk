@@ -31,3 +31,5 @@ test.txt
 /github-antonycc-keys.sh
 /mirror
 /mirror.log
+/updated-by.txt
+/environments/live/.terraform/

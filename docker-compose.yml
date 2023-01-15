@@ -36,7 +36,7 @@ services:
       - backoffice
   http-proxy:
     build:
-      context: http
+      context: http-proxy
     depends_on:
       - catalogue
       - content

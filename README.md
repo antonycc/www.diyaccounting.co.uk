@@ -31,17 +31,26 @@ Static site launch:
 [x] Replace gb-ct references with either test resources in gb-web-local or the published image (when running docker)
 [x] Consolidate product and download urls
 [x] Generate mirrors using published diyaccounting-web Docker images
-[~] Deploy CDN using terraform and assign *.diy certificate
-[ ] TODO: Add S3 bucket for backend and reference wiuth Terragrunt
-[ ] Add terraform module to apply update route 53 config with live. and stage. entries
-[ ] Create authenticated endpoint for stage
-[ ] Secure Origins in both accounts and Polycode too
-[ ] Fix privilages and deploy using the specific deployment user 
+[x] Deploy CDN using terraform and assign *.diy certificate
+[x] Add S3 bucket for backend and reference wiuth Terragrunt
+[x] Add terraform module to apply update route 53 config with live. and stage. entries
 [x] Move to GitHub private repository and rename project to www.diy....
-[~] Implement GitHub actions to build the mirror
+[x] Implement GitHub actions to build the mirror
+[ ] Secure Origins in both accounts and Polycode too
+[ ] Create authenticated endpoint for stage
+[ ] Fix privilages and deploy using the specific deployment user 
 [ ] Use GitHub actions to run a link checker.
+[ ] Use GitHub actions to run a terraform deployment
+[ ] Use GitHub actions to run a manual live content update
+[ ] Use GitHub actions to run a manual live deployment and content update
+[ ] Use GitHub actions to run a terraform destroy (in a separate workflow at the end of the day)
 [ ] Review me and ensure all examples work and update output
 [ ] (MDCMS repository) Update content for open source
+[ ] Repopsitory flow diagram
+[ ] Architecture diagram
+[ ] Enable CloudWatch
+[ ] Ship all logs to cloudwatch
+
 ```
 
 Development environment set-up
@@ -63,6 +72,19 @@ $ source ./aws-887764105431-keys.sh
 }
 $
 ```
+
+Deploy infrastructure for stage
+-------------------------------
+Deploy the site's s3 buckets for stage:
+```bash
+$ # TODO: Add permissions for the deployment user then reinstate: source ./aws-diyaccounting-co-uk-www-deployment-keys.sh
+$ source ./aws-887764105431-keys.sh
+$ cd environments/stage/www-diyaccounting-co-uk
+$ terragrunt init
+$ terragrunt plan
+$ terragrunt apply -auto-approve
+```
+
 
 Build static site for staging
 -----------------------------
@@ -88,6 +110,10 @@ $ echo "${WEBSITE_ENDPOINT?}"
 http://www.stage.diyaccounting.co.uk.s3-website.eu-west-2.amazonaws.com
 $ aws s3 sync './mirror' "s3://${WWW_DOMAIN_NAME?}/" --exclude '*content*' --delete --acl public-read ;
 $ aws s3 sync './mirror' "s3://${WWW_DOMAIN_NAME?}/" --exclude '*' --include '*content*'  --content-type 'application/javascript' --delete --acl public-read ;
+$ echo "s3://${WWW_DOMAIN_NAME?}/ was updated by:" > updated-by.txt
+$ aws sts get-caller-identity >> updated-by.txt
+$ echo "on $(date)" >> updated-by.txt
+$ aws s3 cp './updated-by.txt' "s3://${WWW_DOMAIN_NAME?}/" --content-type 'text/plain' --acl public-read ;
 $ aws s3 ls --summarize --human-readable "s3://${WWW_DOMAIN_NAME?}"
 ...
 2023-01-01 02:31:54    4.1 KiB static-404.html
@@ -132,7 +158,42 @@ server: hypercorn-h11
 
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+$ curl --include https://www.stage.diyaccounting.co.uk/updated-by.txt
+HTTP/1.1 200 OK
+Content-Type: text/plain
+Content-Length: 230
+Connection: keep-alive
+Date: Sun, 15 Jan 2023 17:01:52 GMT
+Last-Modified: Sun, 15 Jan 2023 17:00:46 GMT
+ETag: "af8ecc4110b0aecdb92c8ec1161501fc"
+Accept-Ranges: bytes
+Server: AmazonS3
+X-Cache: Miss from cloudfront
+Via: 1.1 6750d77433312fa1bf305e9ae7af80ae.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: AMS1-P1
+X-Amz-Cf-Id: 4n_1eDFf1MKFz-ys-XlngXFPmow-HfVUMOxy1z1ZqhJ6_SE1CerRPg==
+
+s3://www.stage.diyaccounting.co.uk/
+updated by:
+{
+    "UserId": "AIDAJPGEBR6GRO3SLB6H4",
+    "Account": "887764105431",
+    "Arn": "arn:aws:iam::887764105431:user/builder@aws.diyaccounting.co.uk"
+}
+on Sun Jan 15 18:00:36 CET 2023
 $
+```
+
+Deploy infrastructure for live
+-------------------------------
+Deploy the site's s3 buckets for live:
+```bash
+$ # TODO: Add permissions for the deployment user then reinstate: source ./aws-diyaccounting-co-uk-www-deployment-keys.sh
+$ source ./aws-887764105431-keys.sh
+$ cd environments/live/www-diyaccounting-co-uk
+$ terragrunt init
+$ terragrunt plan
+$ terragrunt apply -auto-approve
 ```
 
 Build static site for live
@@ -202,24 +263,6 @@ server: hypercorn-h11
 
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 $
-```
-
-Deploy infrastructure to AWS
-----------------------------
-Deploy the site's s3 buckets for stage and live:
-```bash
-$ # TODO: Add permissions for the deployment user then reinstate: source ./aws-diyaccounting-co-uk-www-deployment-keys.sh
-$ source ./aws-887764105431-keys.sh
-
-cd environments/stage
-terragrunt run-all init
-terragrunt run-all plan
-terragrunt run-all apply -auto-approve
-
-$ terraform init
-Initializing the backend...
-$ terraform plan
-$ terraform apply -auto-approve
 ```
 
 Create deployment user

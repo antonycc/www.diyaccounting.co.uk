@@ -1,0 +1,20 @@
+locals {
+  # Parse the file path we're in to read the env name: e.g., env 
+  # will be "dev" in the dev folder, "stage" in the stage folder, 
+  # etc.
+  #parsed = regex(".*/environments/(?P<env>.*?)/.*", get_terragrunt_dir())
+  env    = "live" #local.parsed.env
+}
+# Configure S3 as a backend
+remote_state {
+  backend = "s3"
+  config = {
+    bucket = "${local.env}-www-diyaccounting-co-uk-terraform-state"
+    region = "eu-west-2"
+    key    = "${path_relative_to_include()}/terraform.tfstate"
+  }
+  generate = {
+    path      = "backend.tf"
+    if_exists = "overwrite_terragrunt"
+  }
+}

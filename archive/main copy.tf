@@ -19,21 +19,28 @@ module "cdn" {
   http_version        = "http2"
   realtime_metrics_subscription_status = "Enabled"
 
-  logging_config = {
-    bucket = var.logs_aws_s3_bucket_name
-    target_prefix = "www-delivery-cdn/"
-  }
+  #logging_config = {
+  #  bucket = var.logs_aws_s3_bucket_name
+  #  target_prefix = "www-delivery-cdn/"
+  #}
 
   origin = {
     www = {
-      domain_name          = var.www-domain-name
-      custom_origin_config = {
-        http_port              = 80
-        https_port             = 443
-        origin_protocol_policy = "match-viewer"
-        origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
-      }
+      domain_name = "${var.www-domain-name}.s3-website.${var.aws_default_region}.amazonaws.com"
+#    s3_origin_config = {
+#      origin_access_identity = "s3_bucket_one"
+#    }
     }
+
+    #    www = {
+#      domain_name          = var.www-domain_name
+#      custom_origin_config = {
+#        http_port              = 80
+#        https_port             = 443
+#        origin_protocol_policy = "match-viewer"
+#        origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+#      }
+#    }
   }
 
   default_cache_behavior = {
