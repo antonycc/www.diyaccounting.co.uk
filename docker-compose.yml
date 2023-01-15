@@ -34,7 +34,7 @@ services:
       - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE?}
     networks:
       - backoffice
-  http:
+  http-proxy:
     build:
       context: http
     depends_on:

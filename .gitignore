@@ -5,6 +5,7 @@
 **/.idea
 **/.project
 **/.settings
+**/.terraform.lock.hcl
 **/bin
 **/crm.sql
 **/crm-json-latest.zip
@@ -23,10 +24,10 @@ test.txt
 /aws-887764105431-keys.sh
 /aws-diyaccounting-co-uk-www-deployment-keys.sh
 /terraform.tfstate
-/.terraform.lock.hcl
 /terraform.tfstate.backup
 /.terraform/
 /gb-web/src/archive/apache2/public-html/content/
 /github-antonycc-keys.sh
 /mirror
 /mirror.log
+/environments/stage/www-origin/.terraform.lock.hcl

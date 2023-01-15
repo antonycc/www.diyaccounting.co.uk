@@ -31,13 +31,14 @@ Static site launch:
 [x] Replace gb-ct references with either test resources in gb-web-local or the published image (when running docker)
 [x] Consolidate product and download urls
 [x] Generate mirrors using published diyaccounting-web Docker images
-[ ] Deploy CDN using terraform and assign *.diy certificate
-[ ] Update route 53 config with live. and stage. entries
+[~] Deploy CDN using terraform and assign *.diy certificate
+[ ] TODO: Add S3 bucket for backend and reference wiuth Terragrunt
+[ ] Add terraform module to apply update route 53 config with live. and stage. entries
 [ ] Create authenticated endpoint for stage
 [ ] Secure Origins in both accounts and Polycode too
 [ ] Fix privilages and deploy using the specific deployment user 
-[ ] Move to GitHub private repository and rename project to www.diy....
-[ ] Implement GitHub actions to build the mirror and run a link checker.
+[x] Move to GitHub private repository and rename project to www.diy....
+[~] Implement GitHub actions to build the mirror
 [ ] Use GitHub actions to run a link checker.
 [ ] Review me and ensure all examples work and update output
 [ ] (MDCMS repository) Update content for open source
@@ -209,6 +210,12 @@ Deploy the site's s3 buckets for stage and live:
 ```bash
 $ # TODO: Add permissions for the deployment user then reinstate: source ./aws-diyaccounting-co-uk-www-deployment-keys.sh
 $ source ./aws-887764105431-keys.sh
+
+cd environments/stage/www-origin 
+terragrunt init
+terragrunt plan
+terragrunt apply -auto-approve
+
 $ terraform init
 Initializing the backend...
 $ terraform plan
