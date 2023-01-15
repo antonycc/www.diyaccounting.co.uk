@@ -36,21 +36,23 @@ Static site launch:
 [x] Add terraform module to apply update route 53 config with live. and stage. entries
 [x] Move to GitHub private repository and rename project to www.diy....
 [x] Implement GitHub actions to build the mirror
-[ ] Secure Origins in both accounts and Polycode too
-[ ] Create authenticated endpoint for stage
+[ ] Secure Origins
 [ ] Fix privilages and deploy using the specific deployment user 
-[ ] Use GitHub actions to run a link checker.
 [ ] Use GitHub actions to run a terraform deployment
 [ ] Use GitHub actions to run a manual live content update
 [ ] Use GitHub actions to run a manual live deployment and content update
+[ ] (MDCMS repository) Update content for open source
+Stabilisation and onboarding:
 [ ] Use GitHub actions to run a terraform destroy (in a separate workflow at the end of the day)
 [ ] Review me and ensure all examples work and update output
-[ ] (MDCMS repository) Update content for open source
-[ ] Repopsitory flow diagram
-[ ] Architecture diagram
+[ ] Use GitHub actions to run a link checker.
 [ ] Enable CloudWatch
 [ ] Ship all logs to cloudwatch
-
+[ ] Set availability alarms
+[ ] Create usage reports
+[ ] Repopsitory flow diagram
+[ ] Architecture diagram
+[ ] Contributor guidelines
 ```
 
 Development environment set-up
