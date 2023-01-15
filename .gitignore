@@ -6,6 +6,7 @@
 **/.project
 **/.settings
 **/.terraform.lock.hcl
+**/.terragrunt-cache/
 **/bin
 **/crm.sql
 **/crm-json-latest.zip
@@ -30,4 +31,3 @@ test.txt
 /github-antonycc-keys.sh
 /mirror
 /mirror.log
-/environments/stage/www-origin/.terraform.lock.hcl
