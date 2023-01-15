@@ -211,10 +211,10 @@ Deploy the site's s3 buckets for stage and live:
 $ # TODO: Add permissions for the deployment user then reinstate: source ./aws-diyaccounting-co-uk-www-deployment-keys.sh
 $ source ./aws-887764105431-keys.sh
 
-cd environments/stage/www-origin 
-terragrunt init
-terragrunt plan
-terragrunt apply -auto-approve
+cd environments/stage
+terragrunt run-all init
+terragrunt run-all plan
+terragrunt run-all apply -auto-approve
 
 $ terraform init
 Initializing the backend...
