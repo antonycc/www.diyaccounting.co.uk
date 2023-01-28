@@ -39,7 +39,7 @@ jobs:
       - run: docker compose version
 
       - run: terraform --version
-      - run: terragrunt --version
+      #- run: terragrunt --version
 
       - run: aws --version
       - run: aws sts get-caller-identity
