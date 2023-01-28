@@ -268,6 +268,13 @@ $
 ```
 To push the latest content immediately to the live site (www.diyaccounting.co.uk) the CloudFront distribution must be invalidated using pattern `/*`.
 
+Deploy to AWS live site
+-----------------------
+Deployment one liner:
+```bash
+source ./aws-887764105431-keys.sh ; source ./setenv-live.sh ; ./build.sh --clean ; ./deploy.sh
+```
+
 Create deployment user
 ----------------------
 Read the aws-887764105431-keys.sh then run aws-create-deployment-user.sh to create the deployment user.
