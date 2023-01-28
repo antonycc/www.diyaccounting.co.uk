@@ -43,5 +43,5 @@ jobs:
 
       - run: aws --version
       - run: aws sts get-caller-identity
-      - run: aws s3 l3
+      - run: aws s3 ls
       - run: aws cloudfront list-distributions --query 'DistributionList.Items[0].[Id, Aliases]'
