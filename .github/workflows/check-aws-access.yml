@@ -16,13 +16,18 @@ jobs:
 
     steps:
 
+      - run: uname -a
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           role-to-assume: arn:aws:iam::887764105431:role/static-site-deploy
           aws-region: eu-west-2
 
-      - run: uname -a
+      - run: aws --version
+      - run: aws sts get-caller-identity
+      - run: aws s3 ls
+      - run: aws cloudfront list-distributions --query 'DistributionList.Items[0].[Id, Aliases]'
 
       - run: docker version
       - run: docker compose version
@@ -34,8 +39,3 @@ jobs:
       - run: mv terragrunt_darwin_amd64 terragrunt
       - run: chmod u+x terragrunt
       - run: terragrunt --version
-
-      - run: aws --version
-      - run: aws sts get-caller-identity
-      - run: aws s3 ls
-      - run: aws cloudfront list-distributions --query 'DistributionList.Items[0].[Id, Aliases]'
