@@ -1,0 +1,42 @@
+name: Check AWS credentials
+
+on:
+  push:
+    workflow_dispatch:
+
+env:
+  #REGISTRY: ghcr.io
+  #SPRING_PROFILES_ACTIVE: stage
+  #WWW_DOMAIN_NAME: www.stage.diyaccounting.co.uk
+  #AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+  #AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+  #AWS_DEFAULT_REGION: eu-west-2
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest 
+    permissions: 
+      contents: read
+      packages: write 
+    steps:
+
+      #- uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: arn:aws:iam::887764105431:role/static-site-deploy
+          aws-region: eu-west-2
+
+      - run: uname -a
+
+      - run: docker version
+      - run: docker compose version
+
+      - run: terraform --version
+      - run: terragrunt --version
+
+      - run: aws --version
+      - run: aws sts get-caller-identity
+      - run: aws s3 l3
+      - run: aws cloudfront list-distributions --query 'DistributionList.Items[0].[Id, Aliases]'
