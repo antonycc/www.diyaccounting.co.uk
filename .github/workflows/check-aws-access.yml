@@ -4,6 +4,10 @@ on:
   push:
     workflow_dispatch:
 
+# Required to get the ID Token that will be used for OIDC
+permissions:
+  id-token: write
+
 #env:
   #REGISTRY: ghcr.io
   #SPRING_PROFILES_ACTIVE: stage
