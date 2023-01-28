@@ -214,8 +214,8 @@ $
 
 Deploy to AWS live site
 -----------------------
-Deploy the site to: [http://www.live.diyaccounting.co.uk.s3-website.eu-west-2.amazonaws.com]
-To update the live site (www.diyaccounting.co.uk) the CloudFront distribution must be invalidated using pattern `/*`.
+Deploy the site to: [http://www.live.diyaccounting.co.uk.s3-website.eu-west-2.amazonaws.com] either by sourcing scripts 
+`./aws-887764105431-keys.sh` and `./setenv-live.sh` then running script `./deploy.sh` or by entering the following commands:
 ```bash
 $ # TODO: Add permissions for the deployment user then reinstate: source ./aws-diyaccounting-co-uk-www-deployment-keys.sh
 $ source ./aws-887764105431-keys.sh
@@ -266,6 +266,7 @@ server: hypercorn-h11
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 $
 ```
+To push the latest content immediately to the live site (www.diyaccounting.co.uk) the CloudFront distribution must be invalidated using pattern `/*`.
 
 Create deployment user
 ----------------------
