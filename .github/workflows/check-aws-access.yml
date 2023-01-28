@@ -35,7 +35,6 @@ jobs:
       - run: terraform --version
 
       - run: sudo apt-get install -y wget
-      - run: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.43.0/terragrunt_linux_386
-      - run: mv ./terragrunt_darwin_amd64 ./terragrunt
+      - run: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.43.0/terragrunt_linux_386 --output-file ./terragrunt
       - run: chmod u+x ./terragrunt
       - run: ./terragrunt --version
