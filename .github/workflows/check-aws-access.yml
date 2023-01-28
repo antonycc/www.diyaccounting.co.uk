@@ -4,28 +4,17 @@ on:
   push:
     workflow_dispatch:
 
-# Required to get the ID Token that will be used for OIDC
-permissions:
-  id-token: write
-
-#env:
-  #REGISTRY: ghcr.io
-  #SPRING_PROFILES_ACTIVE: stage
-  #WWW_DOMAIN_NAME: www.stage.diyaccounting.co.uk
-  #AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-  #AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-  #AWS_DEFAULT_REGION: eu-west-2
-
 jobs:
-  publish:
-    runs-on: ubuntu-latest 
-    permissions: 
+  stage-build-and-deploy:
+
+    runs-on: ubuntu-latest
+
+    permissions:
       contents: read
       packages: write
       id-token: write
-    steps:
 
-      #- uses: actions/checkout@v3
+    steps:
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
