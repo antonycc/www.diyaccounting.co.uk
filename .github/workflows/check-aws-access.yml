@@ -4,7 +4,7 @@ on:
   push:
     workflow_dispatch:
 
-env:
+#env:
   #REGISTRY: ghcr.io
   #SPRING_PROFILES_ACTIVE: stage
   #WWW_DOMAIN_NAME: www.stage.diyaccounting.co.uk
