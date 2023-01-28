@@ -5,7 +5,7 @@ on:
     workflow_dispatch:
 
 jobs:
-  stage-build-and-deploy:
+  check-aws-access:
 
     runs-on: ubuntu-latest
 
