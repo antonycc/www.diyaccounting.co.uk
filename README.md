@@ -272,7 +272,7 @@ Deploy to AWS live site
 -----------------------
 Deployment one liner:
 ```bash
-source ./aws-887764105431-keys.sh ; source ./setenv-live.sh ; ./build.sh --clean ; ./deploy.sh
+source ./aws-887764105431-keys.sh ; source ./setenv-live.sh ; ./build.sh --purge ; ./deploy.sh
 ```
 
 Create deployment user
