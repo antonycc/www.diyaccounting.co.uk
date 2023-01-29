@@ -21,8 +21,10 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          role-to-assume: arn:aws:iam::887764105431:role/static-site-deploy
           aws-region: eu-west-2
+          role-to-assume: arn:aws:iam::887764105431:role/static-site-deploy
+          role-duration-seconds: 5
+          role-session-name: check-aws-access-session
 
       - run: aws --version
       - run: aws sts get-caller-identity
