@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  check-aws-access:
+  terragrunt-destroy-stage:
 
     runs-on: ubuntu-latest
 

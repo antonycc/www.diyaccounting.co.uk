@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  check-aws-access:
+  terragrunt-apply-stage:
 
     runs-on: ubuntu-latest
 
