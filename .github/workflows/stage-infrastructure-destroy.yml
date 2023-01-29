@@ -30,4 +30,4 @@ jobs:
           role-to-assume: arn:aws:iam::887764105431:role/static-site-deploy
 
       - name: Terragrunt destroy stage
-        run: ./terragrunt destroy --terragrunt-non-interactive --terragrunt-working-dir ./environments/stage/www-diyaccounting-co-uk
+        run: ./terragrunt destroy -auto-approve --terragrunt-non-interactive --terragrunt-working-dir ./environments/stage/www-diyaccounting-co-uk
