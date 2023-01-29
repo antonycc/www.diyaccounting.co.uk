@@ -1,8 +1,7 @@
 name: Check AWS credentials
 
 on:
-  push:
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   check-aws-access:
@@ -18,6 +17,7 @@ jobs:
 
       - run: uname -a
 
+      # See: https://www.eliasbrange.dev/posts/secure-aws-deploys-from-github-actions-with-oidc/#:~:text=To%20be%20able%20to%20authenticate,Provider%20type%2C%20select%20OpenID%20Connect.
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:

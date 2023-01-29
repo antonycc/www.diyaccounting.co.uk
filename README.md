@@ -38,10 +38,10 @@ Static site launch:
 [x] Implement GitHub actions to build the mirror
 [ ] Secure Origins
 [ ] Fix privilages and deploy using the specific deployment user 
-[ ] Use GitHub actions to run a terraform deployment
+[~] Use GitHub actions to run a terraform deployment
 [ ] Use GitHub actions to run a manual live content update
 [ ] Use GitHub actions to run a manual live deployment and content update
-[ ] (MDCMS repository) Update content for open source
+[x] (MDCMS repository) Update content for open source
 Stabilisation and onboarding:
 [ ] Use GitHub actions to run a terraform destroy (in a separate workflow at the end of the day)
 [ ] Review me and ensure all examples work and update output
