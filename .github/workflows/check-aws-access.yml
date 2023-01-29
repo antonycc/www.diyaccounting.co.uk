@@ -27,8 +27,8 @@ jobs:
         with:
           aws-region: eu-west-2
           role-to-assume: arn:aws:iam::887764105431:role/static-site-deploy
-          role-duration-seconds: 900
-          role-session-name: check-aws-access-session
+          #role-duration-seconds: 900
+          #role-session-name: check-aws-access-session
 
       - run: aws --version
       - run: aws sts get-caller-identity
