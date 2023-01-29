@@ -1,0 +1,30 @@
+name: Terragrunt deploy stage
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-aws-access:
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-region: eu-west-2
+          role-to-assume: arn:aws:iam::887764105431:role/static-site-deploy
+
+      - name: Install Terragrunt
+        run: sudo apt-get install -y wget &&
+          wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.43.0/terragrunt_linux_386 --output-document ./terragrunt &&
+          chmod u+x ./terragrunt ; ./terragrunt --version
+
+      - name: Terragrunt deploy stage
+        run: ./terragrunt apply --terragrunt-non-interactive --terragrunt-working-dir ./environments/stage/www-diyaccounting-co-uk
