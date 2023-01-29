@@ -1,4 +1,4 @@
-name: Terragrunt deploy stage
+name: Terragrunt apply stage
 
 on:
   workflow_dispatch:
@@ -29,5 +29,5 @@ jobs:
           aws-region: eu-west-2
           role-to-assume: arn:aws:iam::887764105431:role/static-site-deploy
 
-      - name: Terragrunt deploy stage
+      - name: Terragrunt apply stage
         run: ./terragrunt apply --terragrunt-non-interactive --terragrunt-working-dir ./environments/stage/www-diyaccounting-co-uk
