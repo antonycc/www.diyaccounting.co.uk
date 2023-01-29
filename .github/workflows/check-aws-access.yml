@@ -1,6 +1,8 @@
 name: Check AWS credentials
 
 on:
+  branches:
+    - main
   workflow_dispatch:
 
 jobs:
