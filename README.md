@@ -85,6 +85,10 @@ $ cd environments/stage/www-diyaccounting-co-uk
 $ terragrunt init
 $ terragrunt plan
 $ terragrunt apply -auto-approve
+
+$ # TODO: Switch to assumed role and one line apply
+$ ./aws-assume-deployment-role.sh
+$ terragrunt apply-all -auto-approve --terragrunt-non-interactive --terragrunt-working-dir ./environments/stage
 ```
 
 
@@ -100,13 +104,26 @@ $ docker compose build --no-cache --pull ;
 $ docker compose up --force-recreate --detach --wait ;
 $ ./create-mirror-from-cluster.sh
 $
+
+# TODO: Switch to direct variable declarations and fremove setenv script
+$ export SPRING_PROFILES_ACTIVE='stage'
 ```
 
 Deploy static site for staging
 ==============================
 ```bash
+$ # TODO: Switch to assumed role and one line apply
+$ ./aws-assume-deployment-role.sh
+
+
 $ # TODO: Add permissions for the deployment user then reinstate: source ./aws-diyaccounting-co-uk-www-deployment-keys.sh
 $ source ./aws-887764105431-keys.sh
+# TODO: Switch to direct variable declarations and fremove setenv script
+export WWW_DOMAIN_NAME='www.stage.diyaccounting.co.uk'
+#export LOGGING_BUCKET='stage-diyaccounting-co-uk-logs'
+#export LOGGING_LEVEL='INFO'
+export WEBSITE_ENDPOINT="http://${WWW_DOMAIN_NAME?}.s3-website.eu-west-2.amazonaws.com"
+
 $ source ./setenv-stage.sh
 $ echo "${WEBSITE_ENDPOINT?}"
 http://www.stage.diyaccounting.co.uk.s3-website.eu-west-2.amazonaws.com

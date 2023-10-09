@@ -31,3 +31,4 @@ jobs:
 
       - name: Terragrunt apply stage
         run: ./terragrunt apply -auto-approve --terragrunt-non-interactive --terragrunt-working-dir ./environments/stage/www-diyaccounting-co-uk
+        # TODO try: run: ./terragrunt apply-all -auto-approve --terragrunt-non-interactive --terragrunt-working-dir ./environments/stage
