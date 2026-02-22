@@ -1,6 +1,6 @@
 # Build output
 /target/
-/cdk-submit-gateway.out/
+/cdk-gateway.out/
 /dependency-reduced-pom.xml
 
 # Node
@@ -32,4 +32,3 @@ web/www.diyaccounting.co.uk/redirect-function.js
 # Test output and reports
 web/www.diyaccounting.co.uk/public/tests/
 *.log
-REPORT_ACCESSIBILITY_PENETRATION.md

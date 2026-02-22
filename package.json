@@ -60,7 +60,8 @@
     "update-to-latest": "npx npm-check-updates --upgrade --enginesNode --verbose --install always",
     "update:java": "./scripts/update-java.sh",
     "update:node": "npm run update-to-latest",
-    "diagram:gateway": "npm run cdk:synth && bash -c 'for f in cdk-submit-gateway.out/*.template.json; do npx @mhlabs/cfn-diagram draw.io -c -s -t \"$f\" -o \"cdk-gateway-$(basename $f .template.json).drawio\"; done' && for f in cdk-gateway-*.drawio; do node scripts/clean-drawio.cjs \"$f\"; done"
+    "diagram:gateway": "npm run cdk:synth && bash -c 'for f in cdk-gateway.out/*.template.json; do npx @mhlabs/cfn-diagram draw.io -c -s -t \"$f\" -o \"cdk-gateway-$(basename $f .template.json).drawio\"; done' && for f in cdk-gateway-*.drawio; do node scripts/clean-drawio.cjs \"$f\"; done",
+    "resources:gateway": "node scripts/generate-aws-resources.js --profile gateway"
   },
   "devDependencies": {
     "@axe-core/cli": "^4.11.1",

@@ -30,11 +30,22 @@ web/www.diyaccounting.co.uk/
   redirects.toml       URL redirect configuration
 ```
 
+## Testing
+
+| Command | Purpose |
+|---------|---------|
+| `npm test` | Unit tests — SEO validation + smoke tests |
+| `npm run test:browser` | Browser tests — HTML content validation (Playwright) |
+| `npm run test:gatewayBehaviour-local` | Behaviour tests against local server |
+| `npm run compliance:ci-report-md` | Full compliance report (accessibility + security) |
+
+Start the local dev server with `npm start` (serves on port 3000).
+
 ## Deployment
 
 Deployments run via GitHub Actions:
 
-- **test.yml** — Lint, format check, Maven build, CDK synth (push, PRs, daily)
+- **test.yml** — Lint, format check, Maven build, CDK synth, unit/browser/behaviour tests
 - **deploy.yml** — CDK deploy to ci or prod (push to main, manual dispatch)
 
 OIDC authentication with `gateway-github-actions-role` and `gateway-deployment-role`.
@@ -46,8 +57,13 @@ OIDC authentication with `gateway-github-actions-role` and `gateway-deployment-r
 | `npm run formatting` | Check Prettier + Spotless formatting |
 | `npm run lint:workflows` | Validate GitHub Actions workflows |
 | `npm run diagram:gateway` | Generate architecture diagram |
+| `npm run resources:gateway` | Generate AWS resource catalogue |
 | `npm run update:java` | Update Maven dependencies |
 | `npm run update:node` | Update npm dependencies |
+
+## Template Repository
+
+This repo can be used as a GitHub template for new CDK static sites. See [TEMPLATE.md](TEMPLATE.md) for full instructions.
 
 ## Related Repositories
 

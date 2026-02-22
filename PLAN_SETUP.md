@@ -115,36 +115,26 @@ Plus one stale comment:
 
 | `pom.xml` | 277 | `<!-- Source directory matches submit repo layout -->` | Remove or update |
 
-- [ ] Fix all 9 `cdk-submit-gateway.out` → `cdk-gateway.out` references
-- [ ] Fix stale submit comment in `pom.xml`
-- [ ] Verify `npm run cdk:synth` still works after rename
-- [ ] Verify `npm run diagram:gateway` still works after rename
+- [x] Fix all 9 `cdk-submit-gateway.out` → `cdk-gateway.out` references
+- [x] Fix stale submit comment in `pom.xml`
+- [x] Verify `npm run cdk:synth` still works after rename
+- [ ] Verify `npm run diagram:gateway` still works after rename (deferred — requires cfn-diagram)
 
 ### Phase 2: Smoke test for local dev server
 
 Add a lightweight unit test that starts the local server and verifies pages render. This provides a quick "does it work?" check without the full Playwright suite.
 
-- [ ] Create `web/unit-tests/smoke.test.js` — vitest test that:
-  - Starts `http-server` on a random port
-  - Fetches `index.html`, asserts 200 and checks for key text (e.g. "DIY Accounting", navigation button text)
-  - Fetches `about.html`, asserts 200 and checks for key text (e.g. "DIY Accounting Limited")
-  - Fetches a non-existent page, asserts 404
-  - Tears down server after tests
-- [ ] Ensure it runs as part of `npm run test:unit`
+- [x] Create `web/unit-tests/smoke.test.js` — vitest test (node http server on random port, fetches index/about/404/robots/css)
+- [x] Runs as part of `npm run test:unit` (19 tests total: 13 SEO + 6 smoke)
 
 ### Phase 3: AWS_RESOURCES.md generation script
 
 Generate `AWS_RESOURCES.md` from live AWS data, like we do for compliance reports and architecture diagrams. Add to `package.json` alongside `diagram:gateway`.
 
-- [ ] Create `scripts/generate-aws-resources.js` that:
-  - Calls AWS CLI (CloudFormation describe-stacks, CloudFront list-distributions, IAM list-roles, etc.)
-  - Formats output as the current `AWS_RESOURCES.md` structure
-  - Uses the `gateway` AWS SSO profile
-  - Fails gracefully if not authenticated (prints instructions)
-- [ ] Add `package.json` scripts:
-  - `resources:gateway` — generates `AWS_RESOURCES.md`
-- [ ] Add `AWS_RESOURCES.md` to `.gitignore` (it's generated, like the compliance report)
-- [ ] Remove the current static `AWS_RESOURCES.md` from tracking
+- [x] Create `scripts/generate-aws-resources.js` (queries CloudFormation, CloudFront, S3, IAM, ACM, Lambda, CloudWatch via AWS CLI)
+- [x] Add `resources:gateway` to `package.json`
+- [x] Add `AWS_RESOURCES.md` to `.gitignore`
+- [x] Remove static `AWS_RESOURCES.md` from tracking (`git rm --cached`)
 
 ### Phase 4: Template tooling
 
@@ -152,68 +142,32 @@ Generate `AWS_RESOURCES.md` from live AWS data, like we do for compliance report
 
 Runs first when using this repo as a template. Replaces DIY Accounting-specific content with RFC 2606 placeholders (`site.example`).
 
-- [ ] Create `scripts/template-clean.sh` that:
-  - Replaces `diyaccounting.co.uk` → `site.example` in web content, CDK context, workflows
-  - Replaces `DIY Accounting` → `Example Company` in HTML, about page, JSON-LD
-  - Replaces `@antonycc` → `@owner` in package.json, tags
-  - Replaces company-specific details (directors, address, company number, GA4 ID) with placeholders
-  - Replaces redirect rules in `redirects.toml` with generic examples (e.g. `/old-page.html` → `/`)
-  - Clears `security.txt` contact/expiry to placeholders
-  - Outputs a summary of what was replaced
+- [x] Create `scripts/template-clean.sh` (replaces domains, company name, directors, addresses, GA4 ID, company number, redirects, SPDX copyright with placeholders)
 
 #### 4b. `scripts/template-init.sh`
 
 Runs after `template-clean.sh`. Interactive script that takes real values and applies them.
 
-- [ ] Create `scripts/template-init.sh` that prompts for and applies:
-  - Domain name (e.g. `spreadsheets.example.com`) → replaces `site.example`
-  - Company name → replaces `Example Company`
-  - GitHub owner/scope → replaces `@owner`
-  - AWS account ID → replaces placeholder account ID
-  - Java package name (e.g. `com.example.spreadsheets`) → renames directories and updates all imports
-  - CDK app prefix (e.g. `spreadsheets`) → replaces `gateway` in stack names, resource prefixes
-  - Renames `cdk-gateway/` → `cdk-{prefix}/`
-  - Renames `GatewayStack.java` → `{Prefix}Stack.java`, etc.
-  - Updates `pom.xml` groupId/artifactId
-  - Updates `package.json` name/description
-  - Updates workflow variable names (`GATEWAY_*` → `{PREFIX}_*`)
-  - Outputs a checklist of manual steps remaining (CDK bootstrap, OIDC setup, GitHub variables)
+- [x] Create `scripts/template-init.sh` (interactive prompts for domain, company, GitHub owner, AWS account, Java package, CDK prefix; renames dirs/files, updates all references)
 
 #### 4c. `TEMPLATE.md`
 
-- [ ] Create `TEMPLATE.md` with:
-  - Purpose: "This repository is a GitHub template for CDK static sites on AWS"
-  - Prerequisites: AWS account (bootstrapped), ACM certificate, GitHub repo with OIDC
-  - Step 1: Create repo from template (GitHub UI)
-  - Step 2: Run `scripts/template-clean.sh` (strips DIY-specific content)
-  - Step 3: Run `scripts/template-init.sh` (applies your values)
-  - Step 4: Set GitHub repository variables and environments
-  - Step 5: Push to main → deploy.yml creates the site
-  - Step 6: Copy CloudFrontDomainName output to DNS
-  - Estimated time: 5-25 minutes depending on CDK bootstrap and DNS propagation
-  - Appendix: Bootstrap a new AWS account (CDK bootstrap, OIDC provider, IAM roles, ACM cert)
+- [x] Create `TEMPLATE.md` — full quick start guide, prerequisites, step-by-step, appendix for AWS bootstrapping
 
 ### Phase 5: CLAUDE.md and documentation updates
 
-- [ ] Update CLAUDE.md to reflect:
-  - Testing infrastructure (unit, browser, behaviour tests)
-  - Behaviour test configuration (`GATEWAY_BASE_URL` env var)
-  - Compliance report generation (`npm run compliance:ci-report-md`)
-  - AWS resource generation (`npm run resources:gateway`)
-  - Template usage (reference TEMPLATE.md)
-  - Smoke test in unit test suite
-- [ ] Update README.md:
-  - Add Testing section (unit, browser, behaviour, compliance)
-  - Add "Template Repository" note linking to TEMPLATE.md
-  - Add `npm run resources:gateway` to Development Tools table
+- [x] Update CLAUDE.md — added Testing, Compliance sections, `resources:gateway`, template-clean.sh warning
+- [x] Update README.md — added Testing section, Development Tools (`resources:gateway`), Template Repository link
 
 ### Phase 6: GitHub repository setup verification
 
-- [ ] Verify repository variables are configured: `GATEWAY_ACTIONS_ROLE_ARN`, `GATEWAY_DEPLOY_ROLE_ARN`, `GATEWAY_CERTIFICATE_ARN`
+- [x] Verify repository variables are configured: `GATEWAY_ACTIONS_ROLE_ARN`, `GATEWAY_DEPLOY_ROLE_ARN`, `GATEWAY_CERTIFICATE_ARN`
+- [x] Fixed `GATEWAY_ACTIONS_ROLE_ARN` (was pointing to management account role, now points to gateway account role)
+- [x] Updated `gateway-github-actions-role` OIDC trust policy to include `www.diyaccounting.co.uk`
 - [ ] Verify `ci` and `prod` environments exist with scoped variables
 - [ ] Verify branch protection on `main`
 - [ ] Enable "Template repository" in GitHub Settings
-- [ ] Verify compliance report end-to-end: `npm run compliance:ci-report-md`
+- [ ] Verify compliance report end-to-end: `npm run compliance:ci-report-md` (requires deployed CI environment)
 
 ---
 

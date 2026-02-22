@@ -8,7 +8,7 @@
     "justification": "CDK synthesis output, not deployed code"
   },
   {
-    "path": "cdk-submit-gateway.out/",
+    "path": "cdk-gateway.out/",
     "justification": "CDK gateway synthesis output"
   }
 ]

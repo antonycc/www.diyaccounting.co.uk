@@ -1,6 +1,6 @@
 {
   "app": "java -jar ../target/gateway.jar",
-  "output": "../cdk-submit-gateway.out",
+  "output": "../cdk-gateway.out",
   "context": {
     "@aws-cdk/customresources:installLatestAwsSdkDefault": false,
     "@aws-cdk/core:newStyleStackSynthesis": true,

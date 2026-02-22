@@ -44,7 +44,7 @@ export default [
       "node_modules/",
       "target/",
       "cdk.out/",
-      "cdk-submit-gateway.out/",
+      "cdk-gateway.out/",
       "*.min.js",
       "**/*.test.js",
       "**/*.spec.js",
