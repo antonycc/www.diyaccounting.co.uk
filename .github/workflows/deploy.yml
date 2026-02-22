@@ -4,7 +4,21 @@ run-name: "deploy gateway from ${{ github.ref_name }}"
 on:
   push:
     branches:
-      - main
+      - '**'
+      - '!gh_pages'
+      - '!dependabot/**'
+    paths:
+      - 'infra/main/**'
+      - 'web/public/**'
+      - '.env.ci'
+      - '.env.prod'
+      - '**/cdk.json'
+      - 'Dockerfile'
+      - 'LICENSE'
+      - 'package.json'
+      - 'pom.xml'
+      - 'web/public/**'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch:
     inputs:
       environment-name:
