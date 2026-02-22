@@ -1,11 +1,35 @@
+# Build output
+/target/
+/cdk-submit-gateway.out/
+/dependency-reduced-pom.xml
+
+# Node
+/node_modules/
+
+# Environments
+/.env
+
+# IntelliJ
+/.idea/
+
+# macOS
 **/.DS_Store
-**/.idea
-**/.terraform
-**/.terraform.lock.hcl
-**/.terragrunt-cache
-**/mirror
+**/._*
+
+# Claude Code local files
+.claude/settings.local.json
+CLAUDE.local.md
+
+# CDK output
+/cdk.out/
+
+# Generated diagrams
+*.drawio
+
+# Generated gateway redirect function (built from redirects.toml by scripts/build-gateway-redirects.cjs)
+web/www.diyaccounting.co.uk/redirect-function.js
+
+# Test output and reports
+web/www.diyaccounting.co.uk/public/tests/
 *.log
-aws-887764105431-keys.sh
-aws-diyaccounting-co-uk-www-deployment-keys.sh
-github-antonycc-keys.sh
-updated-by.txt
+REPORT_ACCESSIBILITY_PENETRATION.md
