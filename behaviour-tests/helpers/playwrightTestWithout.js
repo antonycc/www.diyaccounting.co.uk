@@ -19,11 +19,7 @@ export const test = base.extend({
         url.includes("analytics.js") ||
         url.includes("gtag/js")
       ) {
-        const isGaScript =
-          url.includes("analytics.js") ||
-          url.includes("gtag/js") ||
-          url.includes("/gtm.js") ||
-          url.includes("/cwr.js");
+        const isGaScript = url.includes("analytics.js") || url.includes("gtag/js") || url.includes("/gtm.js") || url.includes("/cwr.js");
         const isScriptRequest = isGaScript || route.request().resourceType() === "script";
         return route.fulfill({
           status: 204,

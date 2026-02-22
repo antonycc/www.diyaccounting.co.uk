@@ -167,13 +167,12 @@ When the user says "confirm each command" or similar:
 
 ## Template Repository
 
-This repo is designed as the **simplest CDK static site template**. When creating new static site repos (e.g., spreadsheets), use this as a starting point:
+This repo is designed as the **simplest CDK static site template**. See `TEMPLATE.md` for full instructions. Key scripts:
 
-1. Create repo from this template (GitHub Settings > Template repository)
-2. Rename Java package from `co.uk.diyaccounting.gateway` to target
-3. Update `pom.xml` groupId/artifactId, `cdk.json` context, `package.json` name
-4. Replace web content in `web/` directory
-5. Update workflow variables for the target AWS account
+- `scripts/template-clean.sh` — strips DIY-specific content, replaces with placeholders
+- `scripts/template-init.sh` — interactive, applies your domain/company/account values
+
+**NEVER run `template-clean.sh` without asking the user first.** It destructively replaces site-specific content.
 
 ## Security Checklist
 

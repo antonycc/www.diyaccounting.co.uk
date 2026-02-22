@@ -9,6 +9,10 @@
 - Behaviour tests only differ in config between local/CI/prod (env var `GATEWAY_BASE_URL`)
 - All compliance reporting combined into `REPORT_ACCESSIBILITY_PENETRATION.md` like submit
 - Copy LICENSE (AGPL-3.0) from root repo and apply SPDX copyright/licence headers matching submit
+- Corporate landing page linking to subsites (submit, spreadsheets) — secure via static, low cost
+- Repository is a bastion of good practice, minimal dependencies, template-ready
+- De-duped, documented, and scripted enough to replicate: add account info + domain → live site in 5-25 minutes
+- Working branch: `pristine`
 
 ## Context (from submit PLAN_ACCOUNT_SEPARATION.md)
 
@@ -30,23 +34,6 @@
 - 2.3 Pending: Spreadsheets → `antonycc/diy-accounting`
 - 2.4: Submit repo cleanup
 
-### GitHub Setup Required
-
-GitHub repository `antonycc/www.diyaccounting.co.uk` needs:
-
-1. **Repository variables** (Settings > Variables):
-   - `GATEWAY_ACTIONS_ROLE_ARN` — OIDC auth role for gateway account
-   - `GATEWAY_DEPLOY_ROLE_ARN` — CDK deploy role for gateway account
-   - `GATEWAY_CERTIFICATE_ARN` — ACM certificate ARN for CloudFront
-
-2. **Environments** (Settings > Environments):
-   - `ci` — with above variables scoped to CI
-   - `prod` — with above variables scoped to prod
-
-3. **Branch protection** on `main`:
-   - Require PR reviews
-   - Require status checks (test workflow)
-
 ### Quality Baseline (from submit)
 
 - Java: Spotless + Palantir (100-column width)
@@ -59,7 +46,7 @@ GitHub repository `antonycc/www.diyaccounting.co.uk` needs:
 
 ---
 
-## Work Done (branch `gatewayascdk`)
+## Work Done (branch `gatewayascdk`, merged to `main` via PR #1)
 
 ### Cleanup — removed submit-specific leftovers
 
@@ -78,99 +65,172 @@ GitHub repository `antonycc/www.diyaccounting.co.uk` needs:
 ### Brought over from submit repo
 
 - [x] Behaviour tests: `behaviour-tests/gateway.behaviour.test.js`
-  - Adapted from submit (replaced `fs-extra` with `node:fs`, removed submit-specific dependencies)
-  - Tests: landing page, about page, robots.txt, sitemap.xml, security.txt, redirects, meta tags, JSON-LD
 - [x] Behaviour test helpers: `behaviour-tests/helpers/playwrightTestWithout.js`, `behaviour-helpers.js`
-  - Minimal versions without submit-specific imports (pino, DynamoDB, ngrok)
 - [x] Browser tests: `web/browser-tests/gateway-content.browser.test.js`
-  - Tests: meta tags, navigation buttons, JSON-LD, footer links, company summary, about page, lang attr
 - [x] Unit tests: `web/unit-tests/seo-validation.test.js`
-  - Tests: sitemap.xml structure/URLs/duplicates, robots.txt directives, meta tags, JSON-LD
-- [x] `playwright.config.js` — two projects: `gatewayBehaviour` and `browser-tests`
-- [x] `vitest.config.js` — unit test configuration
+- [x] `playwright.config.js`, `vitest.config.js`
 
 ### Compliance testing infrastructure
 
-- [x] `.pa11yci.ci.json` and `.pa11yci.prod.json` — pa11y configs for gateway pages
-- [x] `eslint.security.config.js` — ESLint security scanning config
-- [x] `.retireignore.json` — retire.js ignore paths
-- [x] `scripts/text-spacing-test.js` — WCAG 1.4.12 text spacing test
-- [x] `scripts/generate-compliance-report.js` — generates `REPORT_ACCESSIBILITY_PENETRATION.md`
+- [x] `.pa11yci.ci.json` and `.pa11yci.prod.json`
+- [x] `eslint.security.config.js`, `.retireignore.json`
+- [x] `scripts/text-spacing-test.js`, `scripts/generate-compliance-report.js`
 
 ### Deployment workflow
 
-- [x] `.github/workflows/deploy.yml` — merged deploy + test-gateway jobs
-  - `params` job: resolves environment from branch/input, handles skipDeploy
-  - `deploy-gateway` job: CDK deploy with OIDC auth and role chaining
-  - `test-gateway` job: Playwright smoke tests in official container
-
-### package.json scripts added
-
-- [x] `test`, `test:unit`, `test:browser` — vitest and playwright test runners
-- [x] `test:gatewayBehaviour`, `test:gatewayBehaviour-ci`, `test:gatewayBehaviour-prod`
-- [x] `accessibility:*` — pa11y, axe, lighthouse, text-spacing for CI and prod
-- [x] `penetration:*` — eslint security, npm audit, retire.js
-- [x] `compliance:*` — combined accessibility + penetration
-- [x] `seo:structured-data-ci`, `seo:structured-data-prod`
-- [x] `linting`, `lint:workflows`
-- [x] `diagram:gateway`
-
-### Test results (all passing)
-
-- [x] 13 unit tests passed (SEO validation)
-- [x] 10 browser tests passed (gateway content)
-
----
-
-## Remaining Work
+- [x] `.github/workflows/deploy.yml` — params + deploy-gateway + test-gateway jobs
+- [x] `.github/workflows/test.yml` — build + unit-test + browser-test + behaviour-test jobs
 
 ### Licence and copyright
 
-- [x] Copy `LICENSE` (AGPL-3.0) from root repo
-- [x] Apply SPDX copyright headers (`SPDX-License-Identifier: AGPL-3.0-only` / `Copyright (C) 2025-2026 DIY Accounting Ltd`) to all source files matching submit's pattern
-- [x] Apply SPDX headers to root repo (`../root.diyaccounting.co.uk`) — `.ncurc.cjs`, `scripts/clean-drawio.cjs`
+- [x] `LICENSE` (AGPL-3.0) copied from root repo
+- [x] SPDX headers on all source files
 
 ### Local development and testing
 
-- [x] Add `npm start` script — `npx serve web/www.diyaccounting.co.uk/public -l 3000`
-- [x] Add `test:gatewayBehaviour-local` script — sets `GATEWAY_BASE_URL=http://localhost:3000`
-- [x] Update `test.yml` with four jobs:
-  - `build` — formatting, Maven verify, CDK synth
-  - `unit-test` — vitest unit tests
-  - `browser-test` — Playwright browser tests with artifact upload
-  - `behaviour-test` — starts local server, waits for ready, runs behaviour tests in Playwright container
-- [x] Redirect test auto-skips when running locally (CloudFront Functions not available)
-- [x] Added `serve` and `wait-on` devDependencies
+- [x] `npm start` — serves static site locally
+- [x] `test:gatewayBehaviour-local` script
+- [x] Redirect test auto-skips when running locally
 
-### GitHub repository setup
+---
 
-- [ ] Create GitHub repository `antonycc/www.diyaccounting.co.uk` (if not done)
-- [ ] Configure repository variables: `GATEWAY_ACTIONS_ROLE_ARN`, `GATEWAY_DEPLOY_ROLE_ARN`, `GATEWAY_CERTIFICATE_ARN`
-- [ ] Create `ci` and `prod` environments with scoped variables
-- [ ] Set up branch protection on `main`
-- [ ] Push `gatewayascdk` branch and open PR
+## Remaining Work (branch `pristine`)
 
-### Compliance reporting
+### Phase 1: Fix copy-paste inconsistencies from submit repo
 
-- [x] Updated `generate-compliance-report.js` to match submit's full report format (detailed sections per test type, violation tables, report files table)
-- [ ] Verify `npm run compliance:ci-report-md` produces `REPORT_ACCESSIBILITY_PENETRATION.md` end-to-end
+Nine files still reference `cdk-submit-gateway.out` — a leftover from when this code lived in the submit repo. Should be `cdk-gateway.out`.
 
-### CLAUDE.md updates
+| File | Line(s) | Current | Fix to |
+|------|---------|---------|--------|
+| `cdk-gateway/cdk.json` | 3 | `../cdk-submit-gateway.out` | `../cdk-gateway.out` |
+| `package.json` | 63 | `cdk-submit-gateway.out` | `cdk-gateway.out` |
+| `.github/workflows/deploy.yml` | 136, 146 | `cdk-submit-gateway.out` | `cdk-gateway.out` |
+| `scripts/update-java.sh` | 13 | `cdk-submit-gateway.out` | `cdk-gateway.out` |
+| `.gitignore` | 3 | `/cdk-submit-gateway.out/` | `/cdk-gateway.out/` |
+| `.prettierignore` | 6 | `cdk-submit-gateway.out/` | `cdk-gateway.out/` |
+| `.retireignore.json` | 11 | `cdk-submit-gateway.out/` | `cdk-gateway.out/` |
+| `eslint.security.config.js` | 47 | `cdk-submit-gateway.out/` | `cdk-gateway.out/` |
 
-- [ ] Update CLAUDE.md to reflect new testing infrastructure and scripts
-- [ ] Document behaviour test configuration (GATEWAY_BASE_URL env var)
-- [ ] Document compliance report generation
+Plus one stale comment:
+
+| `pom.xml` | 277 | `<!-- Source directory matches submit repo layout -->` | Remove or update |
+
+- [ ] Fix all 9 `cdk-submit-gateway.out` → `cdk-gateway.out` references
+- [ ] Fix stale submit comment in `pom.xml`
+- [ ] Verify `npm run cdk:synth` still works after rename
+- [ ] Verify `npm run diagram:gateway` still works after rename
+
+### Phase 2: Smoke test for local dev server
+
+Add a lightweight unit test that starts the local server and verifies pages render. This provides a quick "does it work?" check without the full Playwright suite.
+
+- [ ] Create `web/unit-tests/smoke.test.js` — vitest test that:
+  - Starts `http-server` on a random port
+  - Fetches `index.html`, asserts 200 and checks for key text (e.g. "DIY Accounting", navigation button text)
+  - Fetches `about.html`, asserts 200 and checks for key text (e.g. "DIY Accounting Limited")
+  - Fetches a non-existent page, asserts 404
+  - Tears down server after tests
+- [ ] Ensure it runs as part of `npm run test:unit`
+
+### Phase 3: AWS_RESOURCES.md generation script
+
+Generate `AWS_RESOURCES.md` from live AWS data, like we do for compliance reports and architecture diagrams. Add to `package.json` alongside `diagram:gateway`.
+
+- [ ] Create `scripts/generate-aws-resources.js` that:
+  - Calls AWS CLI (CloudFormation describe-stacks, CloudFront list-distributions, IAM list-roles, etc.)
+  - Formats output as the current `AWS_RESOURCES.md` structure
+  - Uses the `gateway` AWS SSO profile
+  - Fails gracefully if not authenticated (prints instructions)
+- [ ] Add `package.json` scripts:
+  - `resources:gateway` — generates `AWS_RESOURCES.md`
+- [ ] Add `AWS_RESOURCES.md` to `.gitignore` (it's generated, like the compliance report)
+- [ ] Remove the current static `AWS_RESOURCES.md` from tracking
+
+### Phase 4: Template tooling
+
+#### 4a. `scripts/template-clean.sh`
+
+Runs first when using this repo as a template. Replaces DIY Accounting-specific content with RFC 2606 placeholders (`site.example`).
+
+- [ ] Create `scripts/template-clean.sh` that:
+  - Replaces `diyaccounting.co.uk` → `site.example` in web content, CDK context, workflows
+  - Replaces `DIY Accounting` → `Example Company` in HTML, about page, JSON-LD
+  - Replaces `@antonycc` → `@owner` in package.json, tags
+  - Replaces company-specific details (directors, address, company number, GA4 ID) with placeholders
+  - Replaces redirect rules in `redirects.toml` with generic examples (e.g. `/old-page.html` → `/`)
+  - Clears `security.txt` contact/expiry to placeholders
+  - Outputs a summary of what was replaced
+
+#### 4b. `scripts/template-init.sh`
+
+Runs after `template-clean.sh`. Interactive script that takes real values and applies them.
+
+- [ ] Create `scripts/template-init.sh` that prompts for and applies:
+  - Domain name (e.g. `spreadsheets.example.com`) → replaces `site.example`
+  - Company name → replaces `Example Company`
+  - GitHub owner/scope → replaces `@owner`
+  - AWS account ID → replaces placeholder account ID
+  - Java package name (e.g. `com.example.spreadsheets`) → renames directories and updates all imports
+  - CDK app prefix (e.g. `spreadsheets`) → replaces `gateway` in stack names, resource prefixes
+  - Renames `cdk-gateway/` → `cdk-{prefix}/`
+  - Renames `GatewayStack.java` → `{Prefix}Stack.java`, etc.
+  - Updates `pom.xml` groupId/artifactId
+  - Updates `package.json` name/description
+  - Updates workflow variable names (`GATEWAY_*` → `{PREFIX}_*`)
+  - Outputs a checklist of manual steps remaining (CDK bootstrap, OIDC setup, GitHub variables)
+
+#### 4c. `TEMPLATE.md`
+
+- [ ] Create `TEMPLATE.md` with:
+  - Purpose: "This repository is a GitHub template for CDK static sites on AWS"
+  - Prerequisites: AWS account (bootstrapped), ACM certificate, GitHub repo with OIDC
+  - Step 1: Create repo from template (GitHub UI)
+  - Step 2: Run `scripts/template-clean.sh` (strips DIY-specific content)
+  - Step 3: Run `scripts/template-init.sh` (applies your values)
+  - Step 4: Set GitHub repository variables and environments
+  - Step 5: Push to main → deploy.yml creates the site
+  - Step 6: Copy CloudFrontDomainName output to DNS
+  - Estimated time: 5-25 minutes depending on CDK bootstrap and DNS propagation
+  - Appendix: Bootstrap a new AWS account (CDK bootstrap, OIDC provider, IAM roles, ACM cert)
+
+### Phase 5: CLAUDE.md and documentation updates
+
+- [ ] Update CLAUDE.md to reflect:
+  - Testing infrastructure (unit, browser, behaviour tests)
+  - Behaviour test configuration (`GATEWAY_BASE_URL` env var)
+  - Compliance report generation (`npm run compliance:ci-report-md`)
+  - AWS resource generation (`npm run resources:gateway`)
+  - Template usage (reference TEMPLATE.md)
+  - Smoke test in unit test suite
+- [ ] Update README.md:
+  - Add Testing section (unit, browser, behaviour, compliance)
+  - Add "Template Repository" note linking to TEMPLATE.md
+  - Add `npm run resources:gateway` to Development Tools table
+
+### Phase 6: GitHub repository setup verification
+
+- [ ] Verify repository variables are configured: `GATEWAY_ACTIONS_ROLE_ARN`, `GATEWAY_DEPLOY_ROLE_ARN`, `GATEWAY_CERTIFICATE_ARN`
+- [ ] Verify `ci` and `prod` environments exist with scoped variables
+- [ ] Verify branch protection on `main`
+- [ ] Enable "Template repository" in GitHub Settings
+- [ ] Verify compliance report end-to-end: `npm run compliance:ci-report-md`
 
 ---
 
 ## Verification Criteria
 
-1. `npm test` — all unit tests pass
-2. `npm run test:browser` — all browser tests pass
-3. `npm start` — serves static site locally
-4. `GATEWAY_BASE_URL=http://localhost:<port> npm run test:gatewayBehaviour` — behaviour tests pass against local site
-5. `npm run formatting` — no formatting issues
-6. `npm run cdk:synth` — CDK synthesis succeeds
-7. `npm run compliance:ci-report-md` — generates compliance report
-8. All source files have SPDX copyright headers
-9. GitHub Actions workflows pass (test.yml, deploy.yml)
+1. `npm run cdk:synth` — CDK synthesis succeeds (output in `cdk-gateway.out/`, not `cdk-submit-gateway.out/`)
+2. `npm test` — all unit tests pass (including new smoke test)
+3. `npm run test:browser` — all browser tests pass
+4. `npm start` — serves static site locally on port 3000
+5. `GATEWAY_BASE_URL=http://localhost:3000 npm run test:gatewayBehaviour-local` — behaviour tests pass
+6. `npm run formatting` — no formatting issues
+7. `npm run diagram:gateway` — generates architecture diagram
+8. `npm run resources:gateway` — generates AWS_RESOURCES.md (when authenticated)
+9. `npm run compliance:ci-report-md` — generates compliance report
+10. All source files have SPDX copyright headers
+11. `scripts/template-clean.sh` runs without errors and produces valid placeholder site
+12. `scripts/template-init.sh` runs without errors and produces valid customised site
+13. GitHub Actions workflows pass (test.yml, deploy.yml)
+14. No remaining references to `cdk-submit-gateway` anywhere in the repo
+15. TEMPLATE.md documents the full template workflow
