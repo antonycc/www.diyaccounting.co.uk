@@ -274,7 +274,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        <!-- Source directory matches submit repo layout -->
+        <!-- Source directory: CDK Java code lives under infra/main/java -->
         <sourceDirectory>infra/main/java</sourceDirectory>
     </build>
 </project>

@@ -76,7 +76,15 @@ function getPackageVersion() {
 function parseNpmAudit(auditJson) {
   if (!auditJson) return { critical: 0, high: 0, moderate: 0, low: 0, info: 0, total: 0, found: false };
   const vuln = auditJson.metadata?.vulnerabilities || {};
-  return { critical: vuln.critical || 0, high: vuln.high || 0, moderate: vuln.moderate || 0, low: vuln.low || 0, info: vuln.info || 0, total: vuln.total || 0, found: true };
+  return {
+    critical: vuln.critical || 0,
+    high: vuln.high || 0,
+    moderate: vuln.moderate || 0,
+    low: vuln.low || 0,
+    info: vuln.info || 0,
+    total: vuln.total || 0,
+    found: true,
+  };
 }
 
 function parseEslintSecurity(eslintText) {
@@ -102,7 +110,9 @@ function parsePa11yReport(pa11yText) {
 
 function parseAxeResults(axeJson) {
   if (!axeJson || !Array.isArray(axeJson)) return { violations: 0, passes: 0, incomplete: 0, found: false };
-  let totalViolations = 0, totalPasses = 0, totalIncomplete = 0;
+  let totalViolations = 0,
+    totalPasses = 0,
+    totalIncomplete = 0;
   const violationDetails = [];
   for (const result of axeJson) {
     totalViolations += (result.violations || []).length;
@@ -133,12 +143,21 @@ function parseTextSpacingResults(textSpacingJson) {
   const failedPages = textSpacingJson.pages
     .filter((p) => !p.passed && !p.error)
     .map((p) => ({ url: p.url, clippedCount: p.clippedElements?.length || 0 }));
-  return { passed: summary.passed || 0, failed: summary.failed || 0, total: summary.total || 0, errors: summary.errors || 0, failedPages, found: true };
+  return {
+    passed: summary.passed || 0,
+    failed: summary.failed || 0,
+    total: summary.total || 0,
+    errors: summary.errors || 0,
+    failedPages,
+    found: true,
+  };
 }
 
 function parseRetireResults(retireJson) {
   if (!retireJson) return { total: 0, high: 0, medium: 0, low: 0, found: false };
-  let high = 0, medium = 0, low = 0;
+  let high = 0,
+    medium = 0,
+    low = 0;
   const results = Array.isArray(retireJson) ? retireJson : retireJson.data || [];
   for (const result of results) {
     for (const vuln of result.results || []) {

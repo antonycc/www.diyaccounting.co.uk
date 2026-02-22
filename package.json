@@ -60,24 +60,26 @@
     "update-to-latest": "npx npm-check-updates --upgrade --enginesNode --verbose --install always",
     "update:java": "./scripts/update-java.sh",
     "update:node": "npm run update-to-latest",
-    "diagram:gateway": "npm run cdk:synth && bash -c 'for f in cdk-submit-gateway.out/*.template.json; do npx @mhlabs/cfn-diagram draw.io -c -s -t \"$f\" -o \"cdk-gateway-$(basename $f .template.json).drawio\"; done' && for f in cdk-gateway-*.drawio; do node scripts/clean-drawio.cjs \"$f\"; done"
+    "diagram:gateway": "npm run cdk:synth && bash -c 'for f in cdk-gateway.out/*.template.json; do npx @mhlabs/cfn-diagram draw.io -c -s -t \"$f\" -o \"cdk-gateway-$(basename $f .template.json).drawio\"; done' && for f in cdk-gateway-*.drawio; do node scripts/clean-drawio.cjs \"$f\"; done",
+    "diagram:gateway:svg": "npm run diagram:gateway && bash -c 'for f in cdk-gateway-*.drawio; do drawio --export --format svg --output \"${f%.drawio}.svg\" \"$f\"; done'",
+    "resources:gateway": "node scripts/generate-aws-resources.js --profile gateway"
   },
   "devDependencies": {
     "@axe-core/cli": "^4.11.1",
     "@mhlabs/cfn-diagram": "^1.1.40",
-    "@playwright/test": "^1.58.1",
+    "@playwright/test": "^1.58.2",
     "aws-cdk": "^2.1106.1",
-    "eslint": "^9.39.2",
-    "eslint-plugin-security": "^3.0.1",
+    "eslint": "^10.0.1",
+    "eslint-plugin-security": "^4.0.0",
     "http-server": "^14.1.1",
-    "lighthouse": "^12.8.2",
+    "lighthouse": "^12.6.1",
     "npm-check-updates": "^19.4.1",
     "pa11y": "^9.1.0",
-    "pa11y-ci": "^4.0.1",
+    "pa11y-ci": "^1.2.0",
     "prettier": "^3.8.1",
     "retire": "^5.4.2",
     "structured-data-testing-tool": "^4.5.0",
-    "vitest": "^3.2.1",
+    "vitest": "^4.0.18",
     "wait-on": "^9.0.4"
   },
   "engines": {

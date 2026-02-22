@@ -84,7 +84,29 @@ npm run update-to-latest       # Update npm dependencies (latest non-alpha)
 npm run update:java            # Update Maven dependencies to latest versions
 npm run update:node            # Update npm dependencies to latest non-alpha versions
 npm run diagram:gateway        # Generate draw.io architecture diagram from CDK synth output
+npm run resources:gateway      # Generate AWS_RESOURCES.md from live AWS data (requires SSO auth)
 ```
+
+## Testing
+
+```bash
+npm test                       # Unit tests (vitest) — SEO validation + smoke tests
+npm run test:browser           # Browser tests (Playwright) — HTML content validation
+npm run test:gatewayBehaviour-local  # Behaviour tests against local server (localhost:3000)
+npm run test:gatewayBehaviour-ci     # Behaviour tests against CI environment
+npm run test:gatewayBehaviour-prod   # Behaviour tests against production
+```
+
+Behaviour tests use the `GATEWAY_BASE_URL` environment variable to target different environments. When running locally, redirect tests auto-skip (CloudFront Functions not available).
+
+## Compliance
+
+```bash
+npm run compliance:ci-report-md    # Run all compliance checks and generate report (CI)
+npm run compliance:prod-report-md  # Run all compliance checks and generate report (prod)
+```
+
+The compliance report (`REPORT_ACCESSIBILITY_PENETRATION.md`) combines accessibility checks (pa11y, axe-core, Lighthouse, WCAG text spacing) with security checks (ESLint security, npm audit, retire.js). Generated files are gitignored.
 
 ## CDK Architecture
 
@@ -167,13 +189,12 @@ When the user says "confirm each command" or similar:
 
 ## Template Repository
 
-This repo is designed as the **simplest CDK static site template**. When creating new static site repos (e.g., spreadsheets), use this as a starting point:
+This repo is designed as the **simplest CDK static site template**. See `TEMPLATE.md` for full instructions. Key scripts:
 
-1. Create repo from this template (GitHub Settings > Template repository)
-2. Rename Java package from `co.uk.diyaccounting.gateway` to target
-3. Update `pom.xml` groupId/artifactId, `cdk.json` context, `package.json` name
-4. Replace web content in `web/` directory
-5. Update workflow variables for the target AWS account
+- `scripts/template-clean.sh` — strips DIY-specific content, replaces with placeholders
+- `scripts/template-init.sh` — interactive, applies your domain/company/account values
+
+**NEVER run `template-clean.sh` without asking the user first.** It destructively replaces site-specific content.
 
 ## Security Checklist
 

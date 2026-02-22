@@ -10,7 +10,7 @@ set -euo pipefail
 
 # remove Maven's build outputs and cached resolution
 rm -rf target
-rm -rf cdk-submit-gateway.out
+rm -rf cdk-gateway.out
 rm -rf ~/.m2/repository/
 
 # clean + resolve dependencies fresh

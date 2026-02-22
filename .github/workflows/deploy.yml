@@ -4,7 +4,21 @@ run-name: "deploy gateway from ${{ github.ref_name }}"
 on:
   push:
     branches:
-      - main
+      - '**'
+      - '!gh_pages'
+      - '!dependabot/**'
+    paths:
+      - 'infra/main/**'
+      - 'web/public/**'
+      - '.env.ci'
+      - '.env.prod'
+      - '**/cdk.json'
+      - 'Dockerfile'
+      - 'LICENSE'
+      - 'package.json'
+      - 'pom.xml'
+      - 'web/public/**'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch:
     inputs:
       environment-name:
@@ -76,7 +90,7 @@ jobs:
     steps:
 
       - name: Configure AWS role via GitHub OIDC
-        uses: aws-actions/configure-aws-credentials@v5
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ vars.GATEWAY_ACTIONS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
@@ -87,7 +101,7 @@ jobs:
           retry-max-attempts: 3
 
       - name: Assume AWS deployment role
-        uses: aws-actions/configure-aws-credentials@v5
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ vars.GATEWAY_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
@@ -133,7 +147,7 @@ jobs:
               --no-notices \
               --concurrency 4 \
               --asset-parallelism \
-              --outputs-file ../cdk-submit-gateway.out/cdk-outputs-gateway.json \
+              --outputs-file ../cdk-gateway.out/cdk-outputs-gateway.json \
           ;
         env:
           ENVIRONMENT_NAME: ${{ needs.params.outputs.environment-name }}
@@ -143,7 +157,7 @@ jobs:
       - name: Show stack outputs
         run: |
           echo "=== Gateway Stack Outputs ==="
-          cat cdk-submit-gateway.out/cdk-outputs-gateway.json | jq '.'
+          cat cdk-gateway.out/cdk-outputs-gateway.json | jq '.'
           echo ""
           echo ">>> Copy the CloudFrontDomainName value above and use it as input to root.diyaccounting.co.uk deploy.yml <<<"
 

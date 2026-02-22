@@ -3,7 +3,7 @@ coverage/
 node_modules/
 target/
 cdk.out/
-cdk-submit-gateway.out/
+cdk-gateway.out/
 .*
 *.env
 *.md
