@@ -32,3 +32,4 @@ web/www.diyaccounting.co.uk/redirect-function.js
 # Test output and reports
 web/www.diyaccounting.co.uk/public/tests/
 *.log
+/cdk-gateway-ci-gateway-GatewayStack.drawio.bak
