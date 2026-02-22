@@ -25,6 +25,7 @@ CLAUDE.local.md
 
 # Generated diagrams
 *.drawio
+*.svg
 
 # Generated gateway redirect function (built from redirects.toml by scripts/build-gateway-redirects.cjs)
 web/www.diyaccounting.co.uk/redirect-function.js
