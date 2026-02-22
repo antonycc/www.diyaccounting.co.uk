@@ -158,7 +158,14 @@ if [ -d "$OLD_JAVA_DIR" ]; then
 
   # Remove old package directory (only if different)
   if [ "$OLD_JAVA_DIR" != "$NEW_JAVA_DIR" ]; then
-    rm -rf "$PROJECT_ROOT/infra/main/java/co/uk/diyaccounting"
+    rm -rf "$OLD_JAVA_DIR"
+    # Clean up empty parent directories up to infra/main/java/
+    dir="$(dirname "$OLD_JAVA_DIR")"
+    stop_dir="$PROJECT_ROOT/infra/main/java"
+    while [ "$dir" != "$stop_dir" ] && [ "$dir" != "/" ]; do
+      rmdir "$dir" 2>/dev/null || break
+      dir="$(dirname "$dir")"
+    done
   fi
   echo "  Java packages renamed"
 else
